@@ -25,6 +25,7 @@ OpenThermGatewaySensor = otgw_ns.class_("OpenThermGatewaySensor", sensor.Sensor,
 SENSOR_CONTROL_SETPOINT = "control_setpoint"
 SENSOR_ROOM_SETPOINT = "room_setpoint"
 SENSOR_CENTRAL_HEATING_WATER_PRESSURE = "central_heating_water_pressure"
+SENSOR_RETURN_WATER_TEMPERATURE = "return water temperature"
 SENSOR_ROOM_TEMPERATURE = "room_temperature"
 SENSOR_BOILER_WATER_TEMPERATURE = "boiler_water_temperature"
 SENSOR_BURNER_STARTS = "burner_starts"
@@ -41,6 +42,7 @@ SENSOR_CONFIG = {
     SENSOR_CONTROL_SETPOINT: OpenThermGatewaySensorConfig(1, "F88"),
     SENSOR_ROOM_SETPOINT: OpenThermGatewaySensorConfig(16, "F88"),
     SENSOR_CENTRAL_HEATING_WATER_PRESSURE: OpenThermGatewaySensorConfig(18, "F88"),
+    SENSOR_RETURN_WATER_TEMPERATURE: OpenThermGatewaySensorConfig(28, "F88"),
     SENSOR_ROOM_TEMPERATURE: OpenThermGatewaySensorConfig(24, "F88"),
     SENSOR_BOILER_WATER_TEMPERATURE: OpenThermGatewaySensorConfig(25, "F88"),
     SENSOR_BURNER_STARTS: OpenThermGatewaySensorConfig(116, "U16", clear_on_timeout=False),
@@ -75,6 +77,13 @@ CONFIG_SCHEMA = cv.Schema({
         unit_of_measurement='bar',
         accuracy_decimals=1,
         device_class=DEVICE_CLASS_PRESSURE,
+        state_class=STATE_CLASS_MEASUREMENT,
+    ),
+    cv.Optional(SENSOR_RETURN_WATER_TEMPERATURE): sensor.sensor_schema(
+        OpenThermGatewaySensor,
+        unit_of_measurement=UNIT_CELSIUS,
+        accuracy_decimals=0,
+        device_class=DEVICE_CLASS_TEMPERATURE,
         state_class=STATE_CLASS_MEASUREMENT,
     ),
     cv.Optional(SENSOR_BURNER_OPERATION_HOURS): sensor.sensor_schema(
